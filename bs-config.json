@@ -1,0 +1,10 @@
+{
+    "server": {
+        "baseDir": [
+            "./views"
+        ],
+        "routes": {
+            "/vendor": "./node_modules"
+        }
+    }
+}
