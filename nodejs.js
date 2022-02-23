@@ -44,6 +44,9 @@ const addFile = async (fileName, filePath) => {
     return fileHash;
 }
 
-app.listen(process.env.PORT || 3000, (server_port) => {
-    console.log('Server is listening on port %d', server_port);
+const host = '0.0.0.0';
+const port = process.env.PORT || 3000;
+
+app.listen(port, host, function () {
+    console.log("Server started.......");
 });
