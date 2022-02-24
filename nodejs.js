@@ -44,7 +44,7 @@ app.post('/upload', async (req, res) => {
     // fullPath = fullPath + '/' + file.name;
     // const readableStreamForFile = fs.createReadStream(fullPath);
     let fullPath = req.body.path;
-    fullPath = fullPath + '/' + file.name;
+    fullPath = fullPath + "\\" + file.name;
     console.log(fullPath);
 
     pinata.pinFromFS(fullPath, options).then((result) => {
