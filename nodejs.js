@@ -40,32 +40,32 @@ pinata.testAuthentication().then((result) => {
 
 app.post('/upload', async (req, res) => {
     const file = req.files.file;
-    const filePath = 'files/' + file.name;
     let fullPath = req.body.path;
     fullPath = fullPath + '/' + file.name;
-    console.log(fullPath);
+    const readableStreamForFile = fs.createReadStream(fullPath);
+    // let fullPath = req.body.path;
+    // fullPath = fullPath + '/' + file.name;
+    // console.log(fullPath);
 
-    file.mv(filePath, async (err) => {
-        if (err) {
-            console.log('Error: Downloading file');
-            return res.status(500).send(err);
-        }
+    // pinata.pinFromFS(fullPath, options).then((result) => {
+    //     fileName = file.name;
+    //     fileHash = result.IpfsHash;
+    //     console.log(result);
+    //     res.render('upload', { fileName, fileHash });
+    // }).catch((err) => {
+    //     console.log(err);
+    // });
 
-        pinata.pinFromFS(fullPath, options).then((result) => {
-            fs.unlink(filePath, (err) => {
-                if (err) console.log(err);
-            })
-            fileName = file.name;
-            fileHash = result.IpfsHash;
-            console.log(result);
-            res.render('upload', { fileName, fileHash });
-        }).catch((err) => {
-            //handle error here
-            console.log(err);
-        });
 
-    })
 
+
+    pinata.pinFileToIPFS(readableStreamForFile, options).then((result) => {
+        //handle results here
+        console.log(result);
+    }).catch((err) => {
+        //handle error here
+        console.log(err);
+    });
 });
 
 
