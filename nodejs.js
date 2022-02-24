@@ -40,32 +40,32 @@ pinata.testAuthentication().then((result) => {
 
 app.post('/upload', async (req, res) => {
     const file = req.files.file;
-    let fullPath = req.body.path;
-    fullPath = fullPath + '/' + file.name;
-    const readableStreamForFile = fs.createReadStream(fullPath);
     // let fullPath = req.body.path;
     // fullPath = fullPath + '/' + file.name;
-    // console.log(fullPath);
+    // const readableStreamForFile = fs.createReadStream(fullPath);
+    let fullPath = req.body.path;
+    fullPath = fullPath + '/' + file.name;
+    console.log(fullPath);
 
-    // pinata.pinFromFS(fullPath, options).then((result) => {
-    //     fileName = file.name;
-    //     fileHash = result.IpfsHash;
-    //     console.log(result);
-    //     res.render('upload', { fileName, fileHash });
-    // }).catch((err) => {
-    //     console.log(err);
-    // });
-
-
-
-
-    pinata.pinFileToIPFS(readableStreamForFile, options).then((result) => {
-        //handle results here
+    pinata.pinFromFS(fullPath, options).then((result) => {
+        fileName = file.name;
+        fileHash = result.IpfsHash;
         console.log(result);
+        res.render('upload', { fileName, fileHash });
     }).catch((err) => {
-        //handle error here
         console.log(err);
     });
+
+
+
+
+    // pinata.pinFileToIPFS(readableStreamForFile, options).then((result) => {
+    //     //handle results here
+    //     console.log(result);
+    // }).catch((err) => {
+    //     //handle error here
+    //     console.log(err);
+    // });
 });
 
 
