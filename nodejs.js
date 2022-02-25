@@ -47,26 +47,31 @@ app.post('/upload', async (req, res) => {
     let fullPath = req.body.path;
     fullPath = fullPath + "\\" + file.name;
     console.log(fullPath);
-    let filePath = fullPath;
+    let filePath = 'files/' + file.name;
 
+    file.mv(filePath, async (err) => {
+        if (err) {
+            console.log("Error while downloading");
+            return res.status(500).send(err);
+        }
+        fs.readFile(filePath, async (error, fileData) => {
+            const uploadedFile = await fleekStorage.upload({
+                apiKey: 'ML41Qz4GTgN0avpiJ0whww==',
+                apiSecret: 'lXSFV61xUALbLpKRFZN2dVRnYJiA15i0HUQ8GYXuA6M=',
+                key: file.name,
+                ContentType: 'pdf',
+                data: fileData,
+                httpUploadProgressCallback: (event) => {
+                    console.log(Math.round(event.loaded / event.total * 100) + '% done');
+                }
+            });
+            fileName = file.name;
+            fileHash = uploadedFile.hashV0;
+            console.log(uploadedFile);
 
-    fs.readFile(filePath, async (error, fileData) => {
-        const uploadedFile = await fleekStorage.upload({
-            apiKey: 'ML41Qz4GTgN0avpiJ0whww==',
-            apiSecret: 'lXSFV61xUALbLpKRFZN2dVRnYJiA15i0HUQ8GYXuA6M=',
-            key: file.name,
-            ContentType: 'pdf',
-            data: fileData,
-            httpUploadProgressCallback: (event) => {
-                console.log(Math.round(event.loaded / event.total * 100) + '% done');
-            }
-        });
-        fileName = file.name;
-        fileHash = uploadedFile.hashV0;
-        console.log(uploadedFile);
-
-        res.render('upload', { fileName, fileHash });
-    })
+            res.render('upload', { fileName, fileHash });
+        })
+    });
 
     // pinata.pinFromFS(fullPath, options).then((result) => {
     //     fileName = file.name;

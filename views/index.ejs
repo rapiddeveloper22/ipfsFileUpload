@@ -37,6 +37,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
     <title>Document</title>
 </head>
 
@@ -46,7 +47,13 @@
         <label>Full Path</label>
         <input type="text" name="path"><br><br>
         <input type="file" name="file" id="">
+        <input type="file" class="filepond">
+        <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+
         <button>upload </button>
+        <script>
+            FilePond.parse(document.body);
+        </script>
     </form>
 </body>
 
