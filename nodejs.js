@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload())
 
 app.get('/', (req, res) => {
-    res.render('home');
+    res.render('index');
 });
 
 // pinata.testAuthentication().then((result) => {
