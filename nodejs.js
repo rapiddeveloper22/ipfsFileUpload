@@ -59,7 +59,7 @@ app.post('/upload', async (req, res) => {
                 apiKey: 'ML41Qz4GTgN0avpiJ0whww==',
                 apiSecret: 'lXSFV61xUALbLpKRFZN2dVRnYJiA15i0HUQ8GYXuA6M=',
                 key: file.name,
-                ContentType: 'pdf',
+                ContentType: 'pdf/jpg/png/jpeg/docx/doc/mp4/mp3/hvec',
                 data: fileData,
                 httpUploadProgressCallback: (event) => {
                     console.log(Math.round(event.loaded / event.total * 100) + '% done');
